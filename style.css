@@ -2,4 +2,6 @@
     width: 960px;
     height: 960px;
     background-color: black;
+    display: flex;
+    flex-wrap: wrap;
 }

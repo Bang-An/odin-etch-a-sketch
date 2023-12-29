@@ -4,7 +4,8 @@
 // Be careful with borders and margins, as they can adjust the size of the squares!
 
 const gridContainer = document.querySelector('.grid-container');
-const containerSideLength = gridContainer.style.width; // string 
+const containerStyle = window.getComputedStyle(gridContainer);
+const containerSideLength = containerStyle.getPropertyValue('width')
 
 function addGridToContainer(num, containerRef){
     const gridSideLength = parseInt(containerSideLength)/ num; 
@@ -12,7 +13,7 @@ function addGridToContainer(num, containerRef){
         for(let j = 0; j < num; j++){
             let cell = document.createElement('div');
             cell.style.width = gridSideLength + 'px';
-            cell.style.length = gridSideLength + 'px';
+            cell.style.height = gridSideLength + 'px';
             containerRef.appendChild(cell);
         }
     }
