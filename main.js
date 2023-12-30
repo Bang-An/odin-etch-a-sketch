@@ -1,8 +1,3 @@
-// Create the divs using JavaScript. Don’t try making them by hand with copy and pasting in your HTML file!
-// It’s best to put your grid squares inside another “container” div (which can go directly in your HTML).
-// Use flexbox to make the divs appear as a grid (versus just one on each line). Despite the name, do not be tempted to research/use CSS Grid for this as Grid will be taught later after the foundations course. This is an opportunity specifically to get more practice in for flexbox!
-// Be careful with borders and margins, as they can adjust the size of the squares!
-
 const gridContainer = document.querySelector('.grid-container');
 const containerStyle = window.getComputedStyle(gridContainer);
 const containerSideLength = containerStyle.getPropertyValue('width')
@@ -14,9 +9,27 @@ function addGridToContainer(num, containerRef){
             let cell = document.createElement('div');
             cell.style.width = gridSideLength + 'px';
             cell.style.height = gridSideLength + 'px';
+            cell.classList.add('inner-cell');
             containerRef.appendChild(cell);
         }
     }
 }
 
+function clearBoard(){
+    const allGridCells = document.querySelectorAll('.inner-cell');
+    allGridCells.forEach(cell => cell.style.backgroundColor = 'white');
+}
+
+// initialize grid as 16 * 16
 addGridToContainer(16, gridContainer);
+let allGridCells = Array.from(document.querySelectorAll('.inner-cell'));
+
+allGridCells.forEach((element) => {
+    element.addEventListener("mouseenter", ()=>{
+        element.style.backgroundColor = "red";
+    })
+});
+
+// add eventListener for clear button
+const clearButton = document.querySelector('.clear-button');
+clearButton.addEventListener('click', clearBoard);
