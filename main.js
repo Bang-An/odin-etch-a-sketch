@@ -1,3 +1,4 @@
+//Global variables 
 const gridContainer = document.querySelector('.grid-container');
 const containerStyle = window.getComputedStyle(gridContainer);
 const containerSideLength = containerStyle.getPropertyValue('width')
@@ -15,21 +16,45 @@ function addGridToContainer(num, containerRef){
     }
 }
 
+function makeCellsHover(){
+    let allGridCells = Array.from(document.querySelectorAll('.inner-cell'));
+
+    allGridCells.forEach((element) => {
+        element.addEventListener("mouseenter", ()=>{
+        element.style.backgroundColor = "red";
+        })
+    });
+}
+
+// initialize grid
+function initializeBoard(num){
+    addGridToContainer(num, gridContainer);
+    makeCellsHover();
+}
+
 function clearBoard(){
     const allGridCells = document.querySelectorAll('.inner-cell');
     allGridCells.forEach(cell => cell.style.backgroundColor = 'white');
 }
 
-// initialize grid as 16 * 16
-addGridToContainer(16, gridContainer);
-let allGridCells = Array.from(document.querySelectorAll('.inner-cell'));
-
-allGridCells.forEach((element) => {
-    element.addEventListener("mouseenter", ()=>{
-        element.style.backgroundColor = "red";
-    })
-});
-
 // add eventListener for clear button
 const clearButton = document.querySelector('.clear-button');
 clearButton.addEventListener('click', clearBoard);
+
+// button -> prompt to enter cell number, limit 100 
+const changeSizeButton = document.querySelector('.change-size-button');
+changeSizeButton.addEventListener('click', () =>{
+    let size = parseInt(prompt("Enter a new size less than 100"));
+
+    if(size >= 100 || size < 0 || isNaN(size)){
+        alert("invalid size");
+        return;
+    }
+    const parent = document.querySelector('.grid-container');
+    const cells = document.querySelectorAll('.inner-cell');
+    cells.forEach(cell => parent.removeChild(cell));
+    initializeBoard(size);
+})
+
+
+initializeBoard(16);
